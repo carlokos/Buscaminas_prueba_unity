@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using TMPro;
 using UnityEditor.Timeline;
 using UnityEngine;
 
@@ -19,6 +20,7 @@ public class EjemploGenerador : MonoBehaviour
     {
         //iniciamos variable gen
         gen = this;
+        Debug.Log(gen);
 
         //Inicializamos el mapa
         map = new GameObject[width][];
@@ -99,6 +101,7 @@ public class EjemploGenerador : MonoBehaviour
             contador++;
         }
 
+        Debug.Log(contador);
         return contador;
     }
 }
