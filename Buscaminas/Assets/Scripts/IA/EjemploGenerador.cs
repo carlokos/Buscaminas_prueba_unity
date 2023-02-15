@@ -9,53 +9,21 @@ using UnityEngine;
 public class EjemploGenerador : MonoBehaviour
 {
     [SerializeField] private GameObject celda;
-    [SerializeField] private int width, height;
+    private int width, height;
     [SerializeField] private GameObject[][] map;
-    [SerializeField] private int bombsNum;
+    private int bombsNum;
+    public bool MarkMode = false;
 
     public static EjemploGenerador gen;
 
-    // Start is called before the first frame update
-    void Start()
+    public int Width { get => width; set => width = value; }
+    public int Height { get => height; set => height = value; }
+    public int BombsNum { get => bombsNum; set => bombsNum = value; }
+
+    private void Start()
     {
         //iniciamos variable gen
         gen = this;
-        Debug.Log(gen);
-
-        //Inicializamos el mapa
-        map = new GameObject[width][];
-
-        for(int i = 0; i < map.Length; i++)
-        {
-            map[i] = new GameObject[height];
-        }
-
-        for(int i = 0; i < width; i++)
-        {
-            for(int j = 0; j < height; j++)
-            {
-                map[i][j] = Instantiate(celda, new Vector2(i, j), Quaternion.identity);
-                map[i][j].GetComponent<CellManager>().X = i;
-                map[i][j].GetComponent<CellManager>().Y = j;
-            }
-        }
-
-        Camera.main.transform.position = new Vector3 ((float) width/2 -0.5f, (float) height/2 - 0.5f, -10);
-
-        //Colocamos la bomba en el mapa
-        for(int i = 0; i < bombsNum; i++)
-        {
-            int x = Random.Range(0, width);
-            int y = Random.Range(0, height);
-            if (!map[x][y].GetComponent<CellManager>().IsBomb)
-            {
-                map[x][y].GetComponent<CellManager>().IsBomb = true;
-            }
-            else
-            {
-                i--;
-            }
-        }
     }
 
     public int GetCloseBombs(int x, int y)
@@ -101,7 +69,60 @@ public class EjemploGenerador : MonoBehaviour
             contador++;
         }
 
-        Debug.Log(contador);
         return contador;
+    }
+
+    public void generarMapa()
+    {
+        //Inicializamos el mapa
+        map = new GameObject[width][];
+
+        for (int i = 0; i < map.Length; i++)
+        {
+            map[i] = new GameObject[height];
+        }
+
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                map[i][j] = Instantiate(celda, new Vector2(i, j), Quaternion.identity);
+                map[i][j].GetComponent<CellManager>().X = i;
+                map[i][j].GetComponent<CellManager>().Y = j;
+            }
+        }
+
+        Camera.main.transform.position = new Vector3((float)width / 2 - 0.5f, (float)height / 2 - 0.5f, -10);
+
+        //Colocamos la bomba en el mapa
+        for (int i = 0; i < bombsNum; i++)
+        {
+            int x = Random.Range(0, width);
+            int y = Random.Range(0, height);
+            if (!map[x][y].GetComponent<CellManager>().IsBomb)
+            {
+                map[x][y].GetComponent<CellManager>().IsBomb = true;
+            }
+            else
+            {
+                i--;
+            }
+        }
+    }
+
+    public void borrarMapa()
+    {
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                Destroy(map[i][j].gameObject);
+            }
+        }
+    }
+
+    public void changeMarkMode()
+    {
+        MarkMode = !MarkMode;
     }
 }
