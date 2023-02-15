@@ -39,9 +39,9 @@ public class CellManager : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!Puntuaje.CanvasManager.Gameover && !marcada)
+        if (!Puntuaje.CanvasManager.Gameover)
         {
-            if (!EjemploGenerador.gen.MarkMode)
+            if (!EjemploGenerador.gen.MarkMode && !marcada)
             {
                 if (isBomb)
                 {
@@ -56,19 +56,19 @@ public class CellManager : MonoBehaviour
                     Puntuaje.CanvasManager.addScore();
                 }
             }
-            else
+            else if(EjemploGenerador.gen.MarkMode)
             {
-                if (marcada && bandera.)
-                {
-                    bandera.gameObject.SetActive(false);
-                    marcada = false;
-                    Debug.Log("quitamos la bandera");
-                }
-                else if(!marcada && !num.IsActive())
+                if (!marcada)
                 {
                     bandera.gameObject.SetActive(true);
                     marcada = true;
                     Debug.Log("colocamos bandera");
+                }
+                else if(marcada)
+                {  
+                    bandera.gameObject.SetActive(false);
+                    marcada = false;
+                    Debug.Log("quitamos la bandera");
                 }
             }
         }

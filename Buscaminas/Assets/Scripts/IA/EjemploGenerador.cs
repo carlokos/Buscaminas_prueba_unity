@@ -5,10 +5,12 @@ using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEditor.Timeline;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EjemploGenerador : MonoBehaviour
 {
     [SerializeField] private GameObject celda;
+    [SerializeField] private Button btnMark;
     private int width, height;
     [SerializeField] private GameObject[][] map;
     private int bombsNum;
@@ -124,5 +126,13 @@ public class EjemploGenerador : MonoBehaviour
     public void changeMarkMode()
     {
         MarkMode = !MarkMode;
+        if (!MarkMode)
+        {
+            btnMark.image.color = Color.white;
+        }
+        else
+        {
+            btnMark.image.color = Color.yellow;
+        }
     }
 }
